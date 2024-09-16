@@ -26,7 +26,7 @@ public class AppConfig {
     @Bean
     public UserDetailsService userDetailsService() {
         return username -> userRepository.findByUsernameWithRoles(username)
-                .orElseThrow(() -> new UsernameNotFoundException("username not found"));
+                .orElseThrow(() -> new UsernameNotFoundException("Username not found"));
     }
 
     @Bean
@@ -46,8 +46,6 @@ public class AppConfig {
         provider.setPasswordEncoder(passwordEncoder());
         return provider;
     }
-
-
 
     @Bean
     public WebMvcConfigurer corsConfigurer() {

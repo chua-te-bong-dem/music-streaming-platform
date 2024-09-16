@@ -1,6 +1,6 @@
 package com.example.demo.dto.request;
 
-import com.example.demo.constant.PermissionEnum;
+import com.example.demo.constant.PermissionName;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.validation.constraints.NotBlank;
@@ -16,5 +16,5 @@ import java.io.Serializable;
 public class PermissionRequest implements Serializable {
     @NotBlank(message = "Permission name can not be blank")
     @Enumerated(EnumType.STRING)
-    private PermissionEnum name;
+    private PermissionName name;
 }

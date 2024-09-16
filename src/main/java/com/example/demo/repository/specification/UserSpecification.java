@@ -8,6 +8,7 @@ import jakarta.persistence.criteria.Root;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.NonNull;
 import org.springframework.data.jpa.domain.Specification;
 
 @Getter
@@ -16,7 +17,10 @@ import org.springframework.data.jpa.domain.Specification;
 public class UserSpecification implements Specification<User> {
     private SearchSpecification specification;
     @Override
-    public Predicate toPredicate(Root<User> root, CriteriaQuery<?> query, CriteriaBuilder builder) {
+    public Predicate toPredicate(@NonNull Root<User> root,
+                                 CriteriaQuery<?> query,
+                                 @NonNull CriteriaBuilder builder) {
+
         String key = specification.getKey();
         SearchOperator operator = specification.getOperator();
         Object value = specification.getValue();

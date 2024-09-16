@@ -1,6 +1,6 @@
 package com.example.demo.model;
 
-import com.example.demo.constant.RoleEnum;
+import com.example.demo.constant.RoleName;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
@@ -23,7 +23,7 @@ public class Role extends AbstractEntity {
 
     @Column(name = "name", unique = true)
     @Enumerated(EnumType.STRING)
-    private RoleEnum name;
+    private RoleName name;
 
     @ManyToMany
     @JoinTable(

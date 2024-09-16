@@ -14,16 +14,16 @@ public class UserSpecificationBuilder {
         params = new ArrayList<>();
     }
 
-    public UserSpecificationBuilder with(final String key, final String operation,
+    public UserSpecificationBuilder with(final String key, final String operator,
                                          final Object value, final String prefix, final String suffix) {
-        return with(null, key, operation, value, prefix, suffix);
+        return with(null, key, operator, value, prefix, suffix);
     }
 
-    public UserSpecificationBuilder with(final String andOrLogic, final String key, final String operation,
+    public UserSpecificationBuilder with(final String andOrLogic, final String key, final String operator,
                                          final Object value, final String prefix, final String suffix) {
-        SearchOperator searchOperation = SearchOperator.getSimpleOperator(operation);
-        if (searchOperation != null) {
-            params.add(new SearchSpecification(andOrLogic, key, searchOperation, value));
+        SearchOperator searchOperator = SearchOperator.getSimpleOperator(operator);
+        if (searchOperator != null) {
+            params.add(new SearchSpecification(andOrLogic, key, searchOperator, value));
         }
         return this;
     }
@@ -38,7 +38,8 @@ public class UserSpecificationBuilder {
             if (andOrLogic != null) {
                 if (andOrLogic.equals(SearchOperator.AND_OPERATOR)) {
                     result = Specification.where(result).and(new UserSpecification(params.get(i)));
-                } else if (andOrLogic.equals(SearchOperator.OR_OPERATOR)) {
+                }
+                else if (andOrLogic.equals(SearchOperator.OR_OPERATOR)) {
                     result = Specification.where(result).or(new UserSpecification(params.get(i)));
                 }
             }

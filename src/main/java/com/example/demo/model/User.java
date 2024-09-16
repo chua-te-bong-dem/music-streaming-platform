@@ -1,7 +1,8 @@
 package com.example.demo.model;
 
-import com.example.demo.constant.GenderEnum;
+import com.example.demo.constant.Gender;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
@@ -34,7 +35,7 @@ public class User extends AbstractEntity implements UserDetails {
 
     @Column(name = "gender")
     @Enumerated(EnumType.STRING)
-    private GenderEnum genderEnum;
+    private Gender gender;
 
     @Column(name = "date_of_birth")
     @Temporal(TemporalType.DATE)
@@ -56,20 +57,33 @@ public class User extends AbstractEntity implements UserDetails {
     private boolean active;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
-    @JsonIgnore
     private Set<Address> addresses = new HashSet<>();
 
     @ManyToMany(mappedBy = "users")
-    @JsonIgnore
     private Set<Role> roles = new HashSet<>();
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
-    @JsonIgnore
     private Set<Playlist> playlists = new HashSet<>();
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
-    @JsonIgnore
     private Set<ListeningHistory> listeningHistories = new HashSet<>();
+
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "artist_id")
+    @JsonIgnore
+    private Artist artist;
+
+    @Column(name = "account_non_expired")
+    private Boolean accountNonExpired;
+
+    @Column(name = "account_non_locked")
+    private Boolean accountNonLocked;
+
+    @Column(name = "credentials_non_expired")
+    private Boolean credentialsNonExpired;
+
+    @Column(name = "enabled")
+    private Boolean enabled;
 
     public void saveAddress(Address address) {
         if (address != null) {
@@ -123,22 +137,22 @@ public class User extends AbstractEntity implements UserDetails {
 
     @Override
     public boolean isAccountNonExpired() {
-        return true;
+        return accountNonExpired;
     }
 
     @Override
     public boolean isAccountNonLocked() {
-        return true;
+        return accountNonLocked;
     }
 
     @Override
     public boolean isCredentialsNonExpired() {
-        return true;
+        return credentialsNonExpired;
     }
 
     @Override
     public boolean isEnabled() {
-        return true;
+        return enabled;
     }
 }
 

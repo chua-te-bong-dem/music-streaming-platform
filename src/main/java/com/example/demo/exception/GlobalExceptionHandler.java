@@ -1,7 +1,5 @@
 package com.example.demo.exception;
 
-import io.jsonwebtoken.ExpiredJwtException;
-import io.jsonwebtoken.security.SignatureException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -78,16 +76,24 @@ public class GlobalExceptionHandler {
         return createErrorResponse(HttpStatus.CONFLICT, "Database constraint violation", request);
     }
 
+    @ExceptionHandler(IllegalStateException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ErrorResponse handleIllegalStateException(IllegalStateException e, WebRequest request) {
+        return createErrorResponse(HttpStatus.BAD_REQUEST, e.getMessage(), request);
+    }
+
     @ExceptionHandler(HttpMessageNotReadableException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ErrorResponse handleHttpMessageNotReadableException(HttpMessageNotReadableException e,
                                                                WebRequest request) {
-        String message = "Invalid value! ";
-        if (e.getMessage().contains("Gender")){
-            message += "Gender can only be: male, female, other";
-        }
+        String message;
+        if (e.getMessage().contains("Gender")) message = "Gender can only be: male, female, other";
+        else if (e.getMessage().contains("Role")) message = "Invalid Role";
+        else if (e.getMessage().contains("Permission")) message = "Invalid Permission";
+        else if (e.getMessage().contains("Genre")) message = "Invalid Genre";
         else {
             // Optional: if more enum required
+            message = e.getMessage();
         }
 
         return createErrorResponse(HttpStatus.BAD_REQUEST, message, request);
@@ -96,7 +102,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(Exception.class)
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     public ErrorResponse handleException(Exception e, WebRequest request) {
-        return createErrorResponse(HttpStatus.INTERNAL_SERVER_ERROR,e.getCause() + e.getMessage(), request);
+        return createErrorResponse(HttpStatus.INTERNAL_SERVER_ERROR, e.getCause().toString(), request);
     }
 
 }

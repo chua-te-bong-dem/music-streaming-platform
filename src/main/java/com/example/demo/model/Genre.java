@@ -1,6 +1,6 @@
 package com.example.demo.model;
 
-import com.example.demo.constant.GenreEnum;
+import com.example.demo.constant.GenreName;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
@@ -22,7 +22,7 @@ public class Genre extends AbstractEntity {
 
     @Column(name = "name")
     @Enumerated(EnumType.STRING)
-    private GenreEnum name;
+    private GenreName name;
 
     @ManyToMany
     @JoinTable(

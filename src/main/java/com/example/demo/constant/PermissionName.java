@@ -8,17 +8,21 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
 import java.io.IOException;
 
-@JsonDeserialize(using = PermissionEnum.PermissionDeserializer.class)
-public enum PermissionEnum {
-    CREATE_USER, GET_USER, UPDATE_USER, DELETE_USER;
+@JsonDeserialize(using = PermissionName.PermissionDeserializer.class)
+public enum PermissionName {
+    CREATE_USER,
+    GET_USER,
+    UPDATE_USER,
+    DELETE_USER;
+    // ,etc...
 
-    public static class PermissionDeserializer extends JsonDeserializer<PermissionEnum> {
+    public static class PermissionDeserializer extends JsonDeserializer<PermissionName> {
         @Override
-        public PermissionEnum deserialize(JsonParser jsonParser,
+        public PermissionName deserialize(JsonParser jsonParser,
                                           DeserializationContext deserializationContext)
                 throws IOException, JacksonException {
             String value = jsonParser.getText().toUpperCase();
-            return PermissionEnum.valueOf(value);
+            return PermissionName.valueOf(value);
         }
     }
 }

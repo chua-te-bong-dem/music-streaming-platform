@@ -2,7 +2,7 @@ package com.example.demo.dto.response;
 
 
 import com.example.demo.model.Address;
-import com.example.demo.constant.GenderEnum;
+import com.example.demo.constant.Gender;
 import lombok.*;
 
 import java.io.Serializable;
@@ -17,7 +17,7 @@ import java.util.Set;
 public class UserInfoResponse implements Serializable {
     private String lastName;
     private String firstName;
-    private GenderEnum genderEnum;
+    private Gender gender;
     private Date dateOfBirth;
     private String phoneNumber;
     private String email;

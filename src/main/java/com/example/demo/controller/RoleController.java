@@ -48,7 +48,7 @@ public class RoleController {
     @PutMapping("/{roleId}")
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseData<Integer> updateRole(@PathVariable @Min(1) int roleId,
-                                      @Valid @RequestBody RoleRequest request) {
+                                            @Valid @RequestBody RoleRequest request) {
         return new ResponseData<>(HttpStatus.OK.value(),
                 "Update role success",
                 roleService.updateRole(roleId, request));

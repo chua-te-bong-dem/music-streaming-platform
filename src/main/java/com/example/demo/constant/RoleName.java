@@ -8,17 +8,20 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
 import java.io.IOException;
 
-@JsonDeserialize(using = RoleEnum.RoleDeserializer.class)
-public enum RoleEnum {
-    ADMIN, USER, ARTIST, MOD;
+@JsonDeserialize(using = RoleName.RoleDeserializer.class)
+public enum RoleName {
+    ADMIN,
+    USER,
+    ARTIST,
+    MOD;
 
-    public static class RoleDeserializer extends JsonDeserializer<RoleEnum> {
+    public static class RoleDeserializer extends JsonDeserializer<RoleName> {
         @Override
-        public RoleEnum deserialize(JsonParser jsonParser,
+        public RoleName deserialize(JsonParser jsonParser,
                                     DeserializationContext deserializationContext)
                 throws IOException, JacksonException {
             String value = jsonParser.getText().toUpperCase();
-            return RoleEnum.valueOf(value);
+            return RoleName.valueOf(value);
         }
     }
 }

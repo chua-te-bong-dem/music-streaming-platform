@@ -1,5 +1,7 @@
 package com.example.demo.service.impl;
 
+import com.example.demo.constant.PermissionName;
+import com.example.demo.constant.RoleName;
 import com.example.demo.dto.request.RoleRequest;
 import com.example.demo.exception.ResourceNotFoundException;
 import com.example.demo.model.Permission;
@@ -54,9 +56,9 @@ public class RoleServiceImpl implements RoleService {
 
     @Override
     public int addPermissionToRole(String roleName, String permissionName) {
-        Role role = roleRepository.findByName(roleName)
+        Role role = roleRepository.findByName(RoleName.valueOf(roleName))
                 .orElseThrow(() -> new ResourceNotFoundException("Role not found"));
-        Permission permission = permissionRepository.findByName(permissionName)
+        Permission permission = permissionRepository.findByName(PermissionName.valueOf(permissionName))
                 .orElseThrow(() -> new ResourceNotFoundException("Permission not found"));
 
         role.savePermission(permission);

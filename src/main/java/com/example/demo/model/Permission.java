@@ -1,6 +1,6 @@
 package com.example.demo.model;
 
-import com.example.demo.constant.PermissionEnum;
+import com.example.demo.constant.PermissionName;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
@@ -23,7 +23,7 @@ public class Permission extends AbstractEntity {
 
     @Column(name = "name", unique = true)
     @Enumerated(EnumType.STRING)
-    private PermissionEnum name;
+    private PermissionName name;
 
     @ManyToMany
     @JoinTable(

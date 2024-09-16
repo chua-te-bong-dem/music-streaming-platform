@@ -48,7 +48,7 @@ public class AddressController {
     @PutMapping("/{addressId}")
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseData<Long> updateAddress(@PathVariable @Min(1) long addressId,
-                                         @Valid @RequestBody AddressRequest request) {
+                                            @Valid @RequestBody AddressRequest request) {
         return new ResponseData<>(HttpStatus.OK.value(),
                 "Update address success",
                 addressService.updateAddress(addressId, request));

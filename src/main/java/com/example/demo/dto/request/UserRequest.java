@@ -1,6 +1,6 @@
 package com.example.demo.dto.request;
 
-import com.example.demo.constant.GenderEnum;
+import com.example.demo.constant.Gender;
 import com.example.demo.validator.gender.GenderValid;
 import com.example.demo.validator.phone.PhoneNumber;
 import com.fasterxml.jackson.annotation.JsonFormat;
@@ -29,7 +29,7 @@ public class UserRequest implements Serializable {
     private String firstName;
 
     @GenderValid(message = "Gender can only be MALE|FEMALE|OTHER")
-    private GenderEnum genderEnum;
+    private Gender gender;
 
     @NotNull(message = "Date of birth can not be blank")
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
@@ -51,10 +51,16 @@ public class UserRequest implements Serializable {
     @NotNull(message = "User's status can not be null")
     private Boolean active;
 
-    @NotEmpty(message = "Addresses can not be empty")
-    private Set<AddressRequest> addresses;
-
     @NotEmpty(message = "Roles can not be empty")
     private Set<RoleRequest> roles;
+
+    private Boolean accountNonExpired;
+
+    private Boolean accountNonLocked;
+
+    private Boolean credentialsNonExpired;
+
+    private Boolean enabled;
+
 }
 

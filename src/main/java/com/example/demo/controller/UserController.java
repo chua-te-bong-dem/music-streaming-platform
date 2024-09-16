@@ -1,11 +1,11 @@
 package com.example.demo.controller;
 
-import com.example.demo.dto.request.UpdateRequest;
+import com.example.demo.dto.request.UpdateInfoRequest;
 import com.example.demo.dto.request.UserRequest;
 import com.example.demo.dto.response.ResponseData;
 import com.example.demo.dto.response.UserInfoResponse;
 import com.example.demo.model.User;
-import com.example.demo.service.impl.UserServiceImpl;
+import com.example.demo.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
@@ -22,7 +22,7 @@ import java.util.List;
 @Tag(name = "User Controller")
 public class UserController {
 
-    private final UserServiceImpl userService;
+    private final UserService userService;
 
     @Operation(summary = "Add user", description = "Add new user")
     @PostMapping()
@@ -49,7 +49,7 @@ public class UserController {
     }
 
     @PutMapping("/update-my-info")
-    public ResponseData<Long> updateMyInfo(@Valid @RequestBody UpdateRequest request) {
+    public ResponseData<Long> updateMyInfo(@Valid @RequestBody UpdateInfoRequest request) {
         return new ResponseData<>(HttpStatus.OK.value(),
                 "Update My Info success",
                 userService.updateMyInfo(request));
@@ -66,9 +66,10 @@ public class UserController {
 
     @GetMapping("/all")
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseData<?> getAllUser(@RequestParam(defaultValue = "0", required = false) int pageNo,
-                                      @RequestParam(defaultValue = "20", required = false) int pageSize,
-                                      @RequestParam(required = false, defaultValue = "id:asc") String sortBy) {
+    public ResponseData<?> getAllUser(
+            @RequestParam(defaultValue = "0", required = false) int pageNo,
+            @RequestParam(defaultValue = "20", required = false) int pageSize,
+            @RequestParam(defaultValue = "id:asc", required = false) String sortBy) {
         return new ResponseData<>(HttpStatus.OK.value(),
                 "All users",
                 userService.getAllUsers(pageNo, pageSize, sortBy));
@@ -111,10 +112,11 @@ public class UserController {
 
     @GetMapping("/sort-and-search-criteria")
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseData<?> sortAndSearchCriteria(@RequestParam(defaultValue = "0", required = false) int offset,
-                                                 @RequestParam(defaultValue = "10", required = false) int pageSize,
-                                                 @RequestParam(required = false, defaultValue = "id:asc") String sortBy,
-                                                 @RequestParam(required = false, defaultValue = "") String... search) {
+    public ResponseData<?> sortAndSearchCriteria(
+            @RequestParam(defaultValue = "0", required = false) int offset,
+            @RequestParam(defaultValue = "10", required = false) int pageSize,
+            @RequestParam(defaultValue = "id:asc", required = false) String sortBy,
+            @RequestParam(required = false, defaultValue = "") String... search) {
         return new ResponseData<>(HttpStatus.OK.value(),
                 "Criteria Search",
                 userService.sortAndCriteriaSearch(offset, pageSize, sortBy, search));
@@ -122,10 +124,11 @@ public class UserController {
 
     @GetMapping("/specification")
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseData<?> sortAndSearchSpecification(@RequestParam(defaultValue = "0", required = false) int pageNo,
-                                                      @RequestParam(defaultValue = "10", required = false) int pageSize,
-                                                      @RequestParam(required = false, defaultValue = "id:asc") String sortBy,
-                                                      @RequestParam(required = false, defaultValue = "") String search) {
+    public ResponseData<?> sortAndSearchSpecification(
+            @RequestParam(defaultValue = "0", required = false) int pageNo,
+            @RequestParam(defaultValue = "10", required = false) int pageSize,
+            @RequestParam(defaultValue = "id:asc", required = false) String sortBy,
+            @RequestParam(defaultValue = "id!=0", required = false) String search) {
         return new ResponseData<>(HttpStatus.OK.value(),
                 "Specification Search",
                 userService.sortAndSpecificationSearch(pageNo, pageSize, sortBy, search));

@@ -8,20 +8,20 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
 import java.io.IOException;
 
-@JsonDeserialize(using = GenderEnum.GenderDeserializer.class)
-public enum GenderEnum {
+@JsonDeserialize(using = Gender.GenderDeserializer.class)
+public enum Gender {
     MALE,
     FEMALE,
     OTHER;
 
     @JsonDeserialize(using = GenderDeserializer.class)
-    public static class GenderDeserializer extends JsonDeserializer<GenderEnum> {
+    public static class GenderDeserializer extends JsonDeserializer<Gender> {
         @Override
-        public GenderEnum deserialize(JsonParser jsonParser,
-                                      DeserializationContext deserializationContext)
+        public Gender deserialize(JsonParser jsonParser,
+                                  DeserializationContext deserializationContext)
                 throws IOException, JacksonException {
             String value = jsonParser.getText().toUpperCase();
-            return GenderEnum.valueOf(value);
+            return Gender.valueOf(value);
         }
     }
 }

@@ -8,18 +8,28 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
 import java.io.IOException;
 
-@JsonDeserialize(using = GenreEnum.GenreDeserializer.class)
-public enum GenreEnum {
-    POP, ROCK;
+@JsonDeserialize(using = GenreName.GenreDeserializer.class)
+public enum GenreName {
+    POP,
+    INDIE,
+    HIP_HOP,
+    R_AND_B,
+    PHONK,
+    EDM,
+    JAZZ,
+    COUNTRY,
+    PUNK,
+    ROCK;
+    //etc...
 
     @JsonDeserialize(using = GenreDeserializer.class)
-    public static class GenreDeserializer extends JsonDeserializer<GenreEnum> {
+    public static class GenreDeserializer extends JsonDeserializer<GenreName> {
         @Override
-        public GenreEnum deserialize(JsonParser jsonParser,
-                                      DeserializationContext deserializationContext)
+        public GenreName deserialize(JsonParser jsonParser,
+                                     DeserializationContext deserializationContext)
                 throws IOException, JacksonException {
             String value = jsonParser.getText().toUpperCase();
-            return GenreEnum.valueOf(value);
+            return GenreName.valueOf(value);
         }
     }
 }

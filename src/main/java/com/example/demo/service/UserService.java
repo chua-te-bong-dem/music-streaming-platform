@@ -1,6 +1,6 @@
 package com.example.demo.service;
 
-import com.example.demo.dto.request.UpdateRequest;
+import com.example.demo.dto.request.UpdateInfoRequest;
 import com.example.demo.dto.request.UserRequest;
 import com.example.demo.dto.response.PageResponse;
 import com.example.demo.dto.response.PageResponseCriteria;
@@ -13,7 +13,7 @@ public interface UserService {
     long updateUser(Long id, UserRequest request);
     long deleteUser(Long id);
     UserInfoResponse getMyInfo();
-    long updateMyInfo(UpdateRequest request);
+    long updateMyInfo(UpdateInfoRequest request);
     PageResponse<?> getAllUsers(int pageNo, int pageSize, String sortBy);
     long addRoleToUser(String username, String roleName);
     long deleteRoleFromUser(String username, String roleName);

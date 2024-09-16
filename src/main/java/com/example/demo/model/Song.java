@@ -33,7 +33,7 @@ public class Song extends AbstractEntity {
     private String songUrl;
 
     @Column(name = "like_count")
-    private long likeCount;
+    private long likeCount = 0;
 
     @ManyToMany(mappedBy = "songs")
     private Set<Genre> genres;
@@ -56,4 +56,40 @@ public class Song extends AbstractEntity {
     @OneToMany(mappedBy = "song")
     @JsonIgnore
     private Set<ListeningHistory> listeningHistories = new HashSet<>();
+
+    public void saveGenre(Genre genre) {
+        if (genre != null) {
+            if (this.genres == null) {
+                this.genres = new HashSet<>();
+            }
+            if (genre.getSongs() == null) {
+                genre.setSongs(new HashSet<>());
+            }
+            this.genres.add(genre);
+            genre.getSongs().add(this);
+        }
+    }
+
+    public void saveArtist(Artist artist) {
+        if (artist != null) {
+            if (this.artists == null) {
+                this.artists = new HashSet<>();
+            }
+            if (artist.getSongs() == null) {
+                artist.setSongs(new HashSet<>());
+            }
+            this.artists.add(artist);
+            artist.getSongs().add(this);
+        }
+    }
+
+    public void saveAlbum(Album album) {
+        if (album != null) {
+            if (album.getSongs() == null) {
+                album.setSongs(new HashSet<>());
+            }
+            this.album = album;
+            album.getSongs().add(this);
+        }
+    }
 }

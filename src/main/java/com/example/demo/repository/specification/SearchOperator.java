@@ -1,8 +1,18 @@
 package com.example.demo.repository.specification;
 
 public enum SearchOperator {
-    EQUAL, NOT_EQUAL, GREATER_THAN, GREATER_THAN_OR_EQUAL_TO, LESS_THAN, LESS_THAN_OR_EQUAL_TO,
-    LIKE, NOT_LIKE, CONTAIN, NOT_CONTAIN, STARTS_WITH, ENDS_WITH;
+    EQUAL,
+    NOT_EQUAL,
+    GREATER_THAN,
+    GREATER_THAN_OR_EQUAL_TO,
+    LESS_THAN,
+    LESS_THAN_OR_EQUAL_TO,
+    LIKE,
+    NOT_LIKE,
+    CONTAIN,
+    NOT_CONTAIN,
+    STARTS_WITH,
+    ENDS_WITH;
 
     public static final String[] SIMPLE_OPERATOR_SET = { "=", "!=", ">", ">=", "<", "<=", ":", "!:", "~", "!~"};
 

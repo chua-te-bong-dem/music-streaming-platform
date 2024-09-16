@@ -1,6 +1,7 @@
 package com.example.demo.controller;
 
 import com.example.demo.dto.request.RegisterRequest;
+import com.example.demo.dto.request.RegisterRequestForArtist;
 import com.example.demo.dto.request.SignInRequest;
 import com.example.demo.dto.response.ResponseData;
 import com.example.demo.dto.response.TokenResponse;
@@ -36,6 +37,13 @@ public class AuthenticationController {
         return new ResponseData<>(HttpStatus.OK.value(),
                 "Register success",
                 authenticationService.register(request));
+    }
+
+    @PostMapping("/register-for-artist")
+    public ResponseData<TokenResponse> registerForArtist(@Valid @RequestBody RegisterRequestForArtist request) {
+        return new ResponseData<>(HttpStatus.OK.value(),
+                "Register success",
+                authenticationService.registerForArtist(request));
     }
 
     @PostMapping("/logout")

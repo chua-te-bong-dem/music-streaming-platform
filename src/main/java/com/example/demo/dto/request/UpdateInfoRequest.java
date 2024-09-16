@@ -1,6 +1,6 @@
 package com.example.demo.dto.request;
 
-import com.example.demo.constant.GenderEnum;
+import com.example.demo.constant.Gender;
 import com.example.demo.validator.gender.GenderValid;
 import com.example.demo.validator.phone.PhoneNumber;
 import com.fasterxml.jackson.annotation.JsonFormat;
@@ -17,7 +17,7 @@ import java.util.Set;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-public class UpdateRequest implements Serializable {
+public class UpdateInfoRequest implements Serializable {
 
     @NotBlank(message = "Last name can not be blank!")
     @Pattern(regexp = "^[a-zA-Z]{1,20}$", message = "Last name can only be between 1 to 20 alphabet characters")
@@ -28,7 +28,7 @@ public class UpdateRequest implements Serializable {
     private String firstName;
 
     @GenderValid(message = "Gender can only be MALE|FEMALE|OTHER")
-    private GenderEnum genderEnum;
+    private Gender gender;
 
     @NotNull(message = "Date of birth can not be blank")
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)

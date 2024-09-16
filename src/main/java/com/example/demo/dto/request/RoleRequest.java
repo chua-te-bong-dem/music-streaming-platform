@@ -1,6 +1,6 @@
 package com.example.demo.dto.request;
 
-import com.example.demo.constant.RoleEnum;
+import com.example.demo.constant.RoleName;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.validation.constraints.NotBlank;
@@ -16,5 +16,5 @@ import java.io.Serializable;
 public class RoleRequest implements Serializable {
     @NotBlank(message = "Role name can not be blank")
     @Enumerated(EnumType.STRING)
-    private RoleEnum name;
+    private RoleName name;
 }

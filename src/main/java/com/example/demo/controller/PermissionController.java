@@ -43,7 +43,7 @@ public class PermissionController {
 
     @PutMapping("/{permissionId}")
     public ResponseData<Integer> updatePermission(@PathVariable @Min(1) int permissionId,
-                                            @Valid @RequestBody PermissionRequest request) {
+                                                  @Valid @RequestBody PermissionRequest request) {
         return new ResponseData<>(HttpStatus.OK.value(),
                 "Update permission success",
                 permissionService.updatePermission(permissionId, request));

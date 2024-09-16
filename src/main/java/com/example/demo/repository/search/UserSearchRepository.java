@@ -1,13 +1,15 @@
-package com.example.demo.repository;
+package com.example.demo.repository.search;
 
 import com.example.demo.dto.response.PageResponseCriteria;
+import com.example.demo.dto.response.UserDetailsResponse;
+import com.example.demo.mapper.UserMapper;
 import com.example.demo.model.User;
 import com.example.demo.repository.criteria.SearchCriteria;
 import com.example.demo.repository.criteria.UserSearchCriteriaQueryConsumer;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
-import jakarta.persistence.TypedQuery;
 import jakarta.persistence.criteria.*;
+import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
@@ -22,9 +24,12 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 @Repository
-public class SearchRepository {
+@RequiredArgsConstructor
+public class UserSearchRepository {
     @PersistenceContext
     private EntityManager entityManager;
+
+    private final UserMapper userMapper;
 
     public PageResponseCriteria<?> criteriaSearch(int offset, int pageSize, String sortBy, String... search) {
 
@@ -41,7 +46,12 @@ public class SearchRepository {
         }
 
         List<Long> userIds = getUsersIds(offset, pageSize, criteriaList);
+
         List<User> users = getUsersByIds(userIds, sortBy);
+
+        List<UserDetailsResponse> result = users.stream()
+                .map(userMapper::toUserDetailsResponse)
+                .toList();
 
         int totalElement = getTotalElement(criteriaList).intValue();
 
@@ -49,19 +59,8 @@ public class SearchRepository {
                 .offset(offset)
                 .pageSize(pageSize)
                 .totalElement(totalElement)
-                .items(users)
+                .items(result)
                 .build();
-    }
-
-    public List<Long> findIdsBySpecification(Specification<User> specification) {
-        CriteriaBuilder builder = entityManager.getCriteriaBuilder();
-        CriteriaQuery<Long> query = builder.createQuery(Long.class);
-        Root<User> root = query.from(User.class);
-
-        Predicate predicate = specification.toPredicate(root, query, builder);
-        query.select(root.get("id")).where(predicate);
-
-        return entityManager.createQuery(query).getResultList();
     }
 
     public Page<Long> findIdsBySpecification(Specification<User> specification, Pageable pageable) {
